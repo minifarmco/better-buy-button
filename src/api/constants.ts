@@ -8,6 +8,9 @@ export const MIXPANEL_TOKEN = "ebc25be969ed7210cc25900815b1a2c1";
 
 export const FIRESTORE_COLLECTION = "cartSessions";
 
+export const LOADING_GIF_URL =
+  "https://firebasestorage.googleapis.com/v0/b/mini-farm-storefront.appspot.com/o/Minifarm-ShopifyBuyJS%2Fe859db25667cf619a3952ca06cbb2627.gif?alt=media&token=a9372d89-bf24-42cc-b87e-e469de620ac6";
+
 export const FIREBASE_CONFIG = {
   apiKey: "AIzaSyDoDBMNwHDwFM0fDNTac8EzjrAeBL3HgRU",
   authDomain: "mini-farm-storefront.firebaseapp.com",

@@ -63,6 +63,7 @@ const CartRow = ({
                 width: "30px",
                 borderRadius: "3px 0px 0px 3px",
                 border: "0px solid white",
+                cursor: "pointer",
               }}
             >
               -
@@ -87,6 +88,7 @@ const CartRow = ({
                 width: "30px",
                 borderRadius: "0px 3px 3px 0px",
                 border: "0px solid white",
+                cursor: "pointer",
               }}
             >
               +

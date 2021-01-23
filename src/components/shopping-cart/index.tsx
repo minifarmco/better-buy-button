@@ -3,12 +3,17 @@ import Cookies from "js-cookie";
 import "./shopping-cart.css";
 import useWindowSize from "../../api/hooks/useWindowSize";
 import CartSVG from "../../assets/cart.svg";
-import { SHOPIFY_CHECKOUT_ID_COOKIE, COLORS } from "../../api/constants";
+import {
+  SHOPIFY_CHECKOUT_ID_COOKIE,
+  COLORS,
+  LOADING_GIF_URL,
+} from "../../api/constants";
 import { redirectToCheckout, getCartContents } from "../../api/shopify-cart";
 import CartRow from "../cart-row";
 
 const ShoppingCardSidebar = () => {
   const [visible, setVisible] = useState(false);
+  const [showLoadingIcon, setShowLoadingIcon] = useState(false);
   const [cartItems, setCartItems] = useState([]) as Array<any>;
   const [incrementButtonsDisabled, setIncrementButtonsDisabled] = useState(
     false
@@ -21,6 +26,12 @@ const ShoppingCardSidebar = () => {
   };
   window.toggleCartVisibility = (bool: boolean) => {
     setVisible(bool);
+    setShowLoadingIcon(bool);
+    if (bool) {
+      setTimeout(() => {
+        setShowLoadingIcon(false);
+      }, 1500);
+    }
   };
 
   const initCartItems = async () => {
@@ -192,6 +203,22 @@ const ShoppingCardSidebar = () => {
                     updateVariantCount={updateVariantCount}
                   />
                 ))}
+                {showLoadingIcon ? (
+                  <div
+                    style={{
+                      minWidth: "100%",
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <img
+                      alt="loading"
+                      src={LOADING_GIF_URL}
+                      style={{ height: "70px", width: "auto" }}
+                    />
+                  </div>
+                ) : null}
               </div>
             </div>
             <div style={{ marginBottom: "30px" }}>
