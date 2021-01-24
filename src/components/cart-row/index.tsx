@@ -37,7 +37,9 @@ const CartRow = ({
           {cartItem.title}
         </span>
         <span style={{ fontWeight: 400, fontSize: "0.8em" }}>
-          {cartItem.variant.title}
+          {cartItem.variant.title === "Default Title"
+            ? null
+            : cartItem.variant.title}
         </span>
         <div
           style={{

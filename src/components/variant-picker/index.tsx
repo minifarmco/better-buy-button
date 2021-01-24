@@ -33,7 +33,7 @@ const VariantPicker = ({
     setQuantity(e.target.value);
   };
 
-  const addToCart = (variant: any) => async () => {
+  const addToCart = (variant: any, title: string) => async () => {
     window.toggleCartVisibility(true);
     const lineItemsToAdd = [
       {
@@ -53,6 +53,15 @@ const VariantPicker = ({
       },
     };
     trackEvent(event);
+    if (window.fbq) {
+      window.fbq("track", "AddToCart", {
+        content_name: `${title} - ${variant.title} (${variant.sku})`,
+        content_ids: [variant.id],
+        content_type: "product",
+        value: Number(variant.price),
+        currency: "USD",
+      });
+    }
     await window.shopifyClient.checkout.addLineItems(
       window.checkoutId,
       lineItemsToAdd
@@ -123,7 +132,7 @@ const VariantPicker = ({
         ) : null}
 
         <button
-          onClick={addToCart(chosenVariant)}
+          onClick={addToCart(chosenVariant, product.title)}
           style={{
             flex: 1,
             minHeight: "40px",
