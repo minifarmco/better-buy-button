@@ -8,7 +8,7 @@ import {
   COLORS,
   LOADING_GIF_URL,
 } from "../../api/constants";
-import { redirectToCheckout, getCartContents } from "../../api/shopify-cart";
+import { redirectToCheckout, initCartItems } from "../../api/shopify-cart";
 import CartRow from "../cart-row";
 
 const ShoppingCardSidebar = () => {
@@ -32,11 +32,6 @@ const ShoppingCardSidebar = () => {
         setShowLoadingIcon(false);
       }, 1500);
     }
-  };
-
-  const initCartItems = async () => {
-    const cartItems = await getCartContents();
-    window.updateCartItems(cartItems);
   };
 
   useEffect(() => {
@@ -265,6 +260,7 @@ const ShoppingCardSidebar = () => {
                   border: "0px solid white",
                   borderRadius: "5px",
                   marginTop: "10px",
+                  cursor: "pointer",
                 }}
               >
                 Checkout

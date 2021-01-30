@@ -4,7 +4,7 @@ export const UTM_PARAMS_MEMORY = "customBuyButton_utmParamsMemory";
 export const SHOPIFY_DOMAIN = "mini-farm-usa.myshopify.com";
 export const SHOPIFY_TOKEN = "517f81f798b0f394623272bbaf48aa09";
 
-export const MIXPANEL_TOKEN = "ebc25be969ed7210cc25900815b1a2c1";
+export const MIXPANEL_TOKEN = "59764b4f87ad158acd70ded92cb88eb9";
 
 export const FIRESTORE_COLLECTION = "cartSessions";
 

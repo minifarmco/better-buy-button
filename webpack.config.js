@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const baseConfig = {
     output: {
@@ -41,6 +42,22 @@ const baseConfig = {
     plugins: [
         new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /ru/)
     ],
+    optimization : {
+        minimizer: [
+          new UglifyJsPlugin({
+            uglifyOptions: {
+              output: {
+                // removing comments
+                comments: false,
+              },
+              compress: {
+                // remove console.logs
+                drop_console: true,
+              },
+            },
+          }),
+        ],
+      },
     target: 'web'
 };
 

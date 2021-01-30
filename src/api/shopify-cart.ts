@@ -12,45 +12,62 @@ import { trackEvent } from "./mixpanel";
 
 const initNewCheckout = async () => {
   // Initiate the cart with a checkoutId
+  console.log("initNewCheckout...");
   const checkoutId = await window.shopifyClient.checkout
     .create()
     .then((checkout: any) => {
       return checkout.id;
     });
   window.checkoutId = checkoutId;
+  console.log("checkoutId: ", checkoutId);
   Cookies.set(SHOPIFY_CHECKOUT_ID_COOKIE, checkoutId);
+  window.checkoutId = checkoutId;
+  initCartItems();
+};
+
+export const checkExistingShopifyClient = async () => {
+  console.log("checkExistingShopifyClient...");
+  // look for existing checkout in cookies
+  const existingCheckoutId = Cookies.get(SHOPIFY_CHECKOUT_ID_COOKIE);
+  console.log("existingCheckoutId: ", existingCheckoutId);
+  if (existingCheckoutId) {
+    // check if this checkout is already completed
+    console.log("checking if checkout is already completed...");
+    const existingCheckout = await window.shopifyClient.checkout
+      .fetch(existingCheckoutId)
+      .then((checkout: any) => {
+        // Do something with the checkout
+        return checkout;
+      });
+    console.log("existing order status url:", existingCheckout.orderStatusUrl);
+    if (existingCheckout.orderStatusUrl) {
+      // Initiate the cart with a checkoutId
+      console.log("found existing order status url");
+      initNewCheckout();
+    } else {
+      console.log("no existing order status url");
+      window.checkoutId = existingCheckoutId;
+    }
+  } else {
+    // Initiate the cart with a checkoutId
+    initNewCheckout();
+  }
 };
 
 export const initiateShopifyCart = async () => {
+  console.log("Initiating new Shopify Checkout...");
   if (!window.shopifyClient) {
+    console.log("Initiating new Shopify Checkout...");
     // Initializing the Shopify client
     const client = await Client.buildClient({
       domain: SHOPIFY_DOMAIN,
       storefrontAccessToken: SHOPIFY_TOKEN,
     });
     window.shopifyClient = client;
-    // look for existing checkout in cookies
-    const existingCheckoutId = Cookies.get(SHOPIFY_CHECKOUT_ID_COOKIE);
-    if (existingCheckoutId) {
-      // check if this checkout is already completed
-      const existingCheckout = await window.shopifyClient.checkout
-        .fetch(existingCheckoutId)
-        .then((checkout: any) => {
-          // Do something with the checkout
-          return checkout;
-        });
-      if (existingCheckout.orderStatusUrl) {
-        // Initiate the cart with a checkoutId
-        initNewCheckout();
-      } else {
-        window.checkoutId = existingCheckoutId;
-      }
-    } else {
-      // Initiate the cart with a checkoutId
-      initNewCheckout();
-    }
+    checkExistingShopifyClient();
   } else {
     console.error("window.shopifyClient was found");
+    checkExistingShopifyClient();
   }
 };
 
@@ -69,9 +86,9 @@ export const redirectToCheckout = (checkoutId: string) => {
     Object.keys(currentUtmMemory).forEach((k) => {
       params[`${timestamp}_${k}`] = currentUtmMemory[k];
       params[`latest_${k}`] = currentUtmMemory[k];
-      params[`checkoutId`] = checkoutId;
-      params[`checkoutUrlId`] = urlPersistentCheckoutId;
     });
+    params[`checkoutId`] = checkoutId;
+    params[`checkoutUrlId`] = urlPersistentCheckoutId;
     window.addToFirestore({ id: urlPersistentCheckoutId, params });
 
     const event: InitiateCheckoutType = {
@@ -96,6 +113,13 @@ export const getCartContents = async () => {
       // Do something with the checkout
       return checkout.lineItems;
     });
+};
+
+export const initCartItems = async () => {
+  const cartItems = await getCartContents();
+  console.log("cartItems");
+  console.log(cartItems);
+  window.updateCartItems(cartItems);
 };
 
 const fetchNextPage = async (
