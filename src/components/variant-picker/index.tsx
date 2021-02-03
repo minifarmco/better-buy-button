@@ -4,6 +4,7 @@ import { COLORS, SHOPIFY_CHECKOUT_ID_COOKIE } from "../../api/constants";
 import { getCartContents } from "../../api/shopify-cart";
 import { trackEvent } from "../../api/mixpanel";
 import { AddToCartType } from "../../api/data-gov/models";
+import "./variant.css";
 
 const VariantPicker = ({
   product,

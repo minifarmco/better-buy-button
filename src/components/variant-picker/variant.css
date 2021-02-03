@@ -1,0 +1,20 @@
+
+select {
+    -webkit-appearance: none; 
+    -moz-appearance: none;
+    appearance: none;
+    /* background-image: url("data:image/svg+xml,<svg width='24' height='24' xmlns='http://www.w3.org/2000/svg'><path d='m0,6l12,12l12,-12l-24,0z'/><path fill='none' d='m0,0l24,0l0,24l-24,0l0,-24z'/></svg>"); */
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABmJLR0QA/wD/AP+gvaeTAAAA30lEQVRIie3PPQrCQBCG4W8Mk9oUHsPGGwS8QSoLISl2wxwohJxAvIJ4B0HRxiInEPtAgo0KwfxsNMEmbznD7sMAY2N/KwiC2ZB/TgBAa+0yc6qU8vpClFIeM6daa/cNZVl2AHAhom0Yhqs+ECLaALgy8xEA6LX0fX9q2/YOwIKI1kmSbH5Ezsy8jKLoVoL6wOqQD+gXrAmphL7B2pBaqAtmgjRCJpgp0go1YV0QI6gKK4oi64IYQwAgIk6e53sA8+foZFnWMo7ju8l7YwgoXcaml3ydiDgi4gwGjI311gMUgn2Si/NmowAAAABJRU5ErkJggg==");
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    background-position:
+    calc(100% - 15px) calc(1em - 5px),
+    calc(100% - 20px) calc(1em - 5px),
+    100% 0;
+    background-color:white;
+    color: #000000;
+    border: 1px solid #000000;
+    background-repeat: no-repeat;
+}
+

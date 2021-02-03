@@ -100,8 +100,11 @@ export const redirectToCheckout = (checkoutId: string) => {
     trackEvent(event);
 
     const webUrl = checkout.webUrl;
-    const win = window.open(webUrl, "_blank");
-    win?.focus();
+    const newTab = window.open(webUrl, "_blank");
+
+    if (!newTab) {
+      window.location.href = webUrl;
+    }
   });
 };
 

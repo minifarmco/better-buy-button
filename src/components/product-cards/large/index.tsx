@@ -20,6 +20,12 @@ const LargeBuyButton = ({
   const [ref, dimensions] = useDimensions();
 
   const isExtraLarge = () => {
+    console.log("dimensions:");
+    console.log(dimensions);
+    // by default, assume a large card is taking up a ton of space (otherwise it would probably have been a medium card)
+    if (!dimensions.width && !dimensions.height) {
+      return true;
+    }
     return dimensions.width > 500;
   };
 
